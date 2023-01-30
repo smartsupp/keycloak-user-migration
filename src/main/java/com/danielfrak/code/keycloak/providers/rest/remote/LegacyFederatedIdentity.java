@@ -33,7 +33,7 @@ public class LegacyFederatedIdentity {
     }
 
     public void setUserName(String userName) {
-        return userName;
+        this.userName = userName;
     }
 
     public String getToken() {
@@ -55,18 +55,17 @@ public class LegacyFederatedIdentity {
         LegacyFederatedIdentity legacyFederatedIdentity = (LegacyFederatedIdentity) o;
 
         return Objects.equals(identityProvider, legacyFederatedIdentity.identityProvider)
-            && Objects.equals(userId, legacyFederatedIdentity.userId)
-            && Objects.equals(userName, legacyFederatedIdentity.userName)
-            && Objects.equals(token, legacyFederatedIdentity.token)
+                && Objects.equals(userId, legacyFederatedIdentity.userId)
+                && Objects.equals(userName, legacyFederatedIdentity.userName)
+                && Objects.equals(token, legacyFederatedIdentity.token);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-            identityProvider,
-            userId,
-            userName,
-            token
-        );
+                identityProvider,
+                userId,
+                userName,
+                token);
     }
 }
