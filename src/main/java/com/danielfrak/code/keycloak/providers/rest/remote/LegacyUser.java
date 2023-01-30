@@ -20,6 +20,7 @@ public class LegacyUser {
     private List<String> roles;
     private List<String> groups;
     private List<String> requiredActions;
+    private List<LegacyFederatedIdentity> federatedIdentities;
 
     public String getId() {
         return id;
@@ -109,6 +110,14 @@ public class LegacyUser {
         this.requiredActions = requiredActions;
     }
 
+    public List<LegacyFederatedIdentity> getFederatedIdentities() {
+        return federatedIdentities;
+    }
+
+    public void setFederatedIdentities(List<LegacyFederatedIdentity> federatedIdentities) {
+        this.federatedIdentities = federatedIdentities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -129,12 +138,13 @@ public class LegacyUser {
                 Objects.equals(attributes, legacyUser.attributes) &&
                 Objects.equals(roles, legacyUser.roles) &&
                 Objects.equals(groups, legacyUser.groups) &&
-                Objects.equals(requiredActions, legacyUser.requiredActions);
+                Objects.equals(requiredActions, legacyUser.requiredActions)
+                Objects.equals(federatedIdentities, legacyUser.federatedIdentities);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, username, email, firstName, lastName, isEnabled, isEmailVerified, attributes,
-                roles, groups, requiredActions);
+                roles, groups, requiredActions, federatedIdentities);
     }
 }

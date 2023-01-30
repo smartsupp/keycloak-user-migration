@@ -55,11 +55,12 @@ public class UserModelFactory {
     public UserModel create(LegacyUser legacyUser, RealmModel realm) {
         LOG.infof("Creating user model for: %s", legacyUser.getUsername());
 
+        UserProvider userProvider = session.users();
         UserModel userModel;
         if (isEmpty(legacyUser.getId())) {
-            userModel = session.users().addUser(realm, legacyUser.getUsername());
+            userModel = userProvider.addUser(realm, legacyUser.getUsername());
         } else {
-            userModel = session.users().addUser(
+            userModel = userProvider.addUser(
                     realm,
                     legacyUser.getId(),
                     legacyUser.getUsername(),
@@ -91,6 +92,11 @@ public class UserModelFactory {
         if (legacyUser.getRequiredActions() != null) {
             legacyUser.getRequiredActions()
                 .forEach(userModel::addRequiredAction);
+        }
+
+        if (legacyUser.getFederatedIdentities() != null) {
+            legacyUser.getFederatedIdentities()
+                .forEach(fi -> userProvider.addFederatedIdentity(realm, userModel, mapFederatedIdentity(fi)))
         }
 
         return userModel;
@@ -186,5 +192,14 @@ public class UserModelFactory {
                 });
 
         return Optional.of(realmGroup);
+    }
+
+    private FederatedIdentityModel mapFederatedIdentity(LegacyFederatedIdentity legacyFederatedIdentity) {
+        return new FederatedIdentityModel(
+            legacyFederatedIdentity.getIdentityProvider(),
+            legacyFederatedIdentity.getUserId(),
+            legacyFederatedIdentity.getUserName(),
+            legacyFederatedIdentity.getToken(),
+        );
     }
 }
