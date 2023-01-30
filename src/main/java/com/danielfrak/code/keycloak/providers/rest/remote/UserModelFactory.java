@@ -65,8 +65,7 @@ public class UserModelFactory {
                     legacyUser.getId(),
                     legacyUser.getUsername(),
                     true,
-                    false
-            );
+                    false);
         }
 
         validateUsernamesEqual(legacyUser, userModel);
@@ -91,12 +90,12 @@ public class UserModelFactory {
 
         if (legacyUser.getRequiredActions() != null) {
             legacyUser.getRequiredActions()
-                .forEach(userModel::addRequiredAction);
+                    .forEach(userModel::addRequiredAction);
         }
 
         if (legacyUser.getFederatedIdentities() != null) {
             legacyUser.getFederatedIdentities()
-                .forEach(fi -> userProvider.addFederatedIdentity(realm, userModel, mapFederatedIdentity(fi)))
+                    .forEach(fi -> userProvider.addFederatedIdentity(realm, userModel, mapFederatedIdentity(fi)));
         }
 
         return userModel;
@@ -122,8 +121,8 @@ public class UserModelFactory {
 
     /**
      * @return A {@link RoleModel} for this role in the realm.
-     * Created if not found in the realm or in any of the realm's clients.
-     * Migrated only if present in the map or config enables this.
+     *         Created if not found in the realm or in any of the realm's clients.
+     *         Migrated only if present in the map or config enables this.
      * @see ConfigurationProperties#MIGRATE_UNMAPPED_ROLES_PROPERTY
      */
     private Optional<RoleModel> getRoleModel(RealmModel realm, String role) {
@@ -196,10 +195,9 @@ public class UserModelFactory {
 
     private FederatedIdentityModel mapFederatedIdentity(LegacyFederatedIdentity legacyFederatedIdentity) {
         return new FederatedIdentityModel(
-            legacyFederatedIdentity.getIdentityProvider(),
-            legacyFederatedIdentity.getUserId(),
-            legacyFederatedIdentity.getUserName(),
-            legacyFederatedIdentity.getToken(),
-        );
+                legacyFederatedIdentity.getIdentityProvider(),
+                legacyFederatedIdentity.getUserId(),
+                legacyFederatedIdentity.getUserName(),
+                legacyFederatedIdentity.getToken());
     }
 }
